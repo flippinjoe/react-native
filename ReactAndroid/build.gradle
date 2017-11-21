@@ -37,7 +37,7 @@ task downloadBoost(dependsOn: createNativeDepsDirectories, type: Download) {
 }
 
 task prepareBoost(dependsOn: boostPath ? [] : [downloadBoost], type: Copy) {
-    from boostPath ? boostPath : zipTree(downloadBoost.dest)
+    from boostPath ?: tarTree(resources.gzip(downloadBoost.dest))
     from 'src/main/jni/third-party/boost/Android.mk'
     include 'boost_1_57_0/boost/**/*.hpp', 'Android.mk'
     into "$thirdPartyNdkDir/boost"
