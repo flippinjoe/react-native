@@ -294,12 +294,13 @@ public class ReactModalHostView extends ViewGroup implements LifecycleEventListe
     protected void onSizeChanged(final int w, final int h, int oldw, int oldh) {
       super.onSizeChanged(w, h, oldw, oldh);
       if (getChildCount() > 0) {
+        final int viewTag = getChildAt(0).getId();
         ((ReactContext) getContext()).runOnNativeModulesQueueThread(
           new Runnable() {
             @Override
             public void run() {
               ((ReactContext) getContext()).getNativeModule(UIManagerModule.class)
-                .updateNodeSize(getChildAt(0).getId(), w, h);
+                .updateNodeSize(viewTag, w, h);
             }
           });
       }
